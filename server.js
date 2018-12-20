@@ -1,68 +1,36 @@
 var express = require('express');
 var bodyParser =require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
+var db = require('./db');
+var ArtistsController = require('./controllers/artists');
 
 var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// додамо роут який буде повертати список виконавців
-var artists =[
-    {
-        id: 1,
-        name: 'Metalica'
-    },
-    {
-        id: 2,
-        name: 'Iron Maiden'
-    },
-    {
-        id: 3,
-        name: 'Deep purpule'
-    },
-];
-
 app.get('/', function (req,res) {
     res.send('Hello API');
 });
 
-app.get('/artists', function (req,res) {
-    res.send(artists);
+app.get('/artists', ArtistsController.all);
+
+app.get('/artists/:id', ArtistsController.findById);
+
+app.post('/artists', ArtistsController.create);
+
+app.put('/artists/:id', ArtistsController.update);
+
+app.delete('/artists/:id', ArtistsController.delete);
+
+// так зроблено щоб не щапускати сервер якщо немає зєднання з БД
+db.connect('mongodb://127.0.0.1:27017/myapi', function (err) {
+   if (err){
+       return console.log(err);
+   }
+   app.listen(3013, function () {
+       console.log('API server started on port 3013');
+   });
 });
 
-app.get('/artists/:id', function (req,res) {
-    var artist = artists.find(function (artist) {
-        return artist.id === +req.params.id;
-    });
-    res.send(artist);
-});
-
-app.post('/artists', function (req, res) {
-    var artist = {
-        id: Date.now(),
-        name: req.body.name
-    };
-    artists.push(artist);
-    console.log(req.body);
-    res.send(artist);
-});
-
-app.put('/artists/:id', function (req, res) {
-    var artist = artists.find(function (artist) {
-        return artist.id === +req.params.id;
-    });
-    artist.name = req.body.name;
-    res.sendStatus(200);
-});
-
-app.delete('/artists/:id', function (req, res) {
-
-    artists = artists.filter(function (artist) {
-        return artist.id !== Number(req.params.id);
-    });
-    res.sendStatus(200);
-});
-
-app.listen(3013, function () {
-    console.log('API server started on port 3013');
-});
