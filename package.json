@@ -1,0 +1,22 @@
+{
+  "name": "api-with-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KostiantynLogunov/node-myAPI-simple.git"
+  },
+  "author": "Kostiantyn Logunov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KostiantynLogunov/node-myAPI-simple/issues"
+  },
+  "homepage": "https://github.com/KostiantynLogunov/node-myAPI-simple#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
