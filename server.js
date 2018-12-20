@@ -1,7 +1,5 @@
 var express = require('express');
 var bodyParser =require('body-parser');
-var MongoClient = require('mongodb').MongoClient;
-var ObjectID = require('mongodb').ObjectID;
 var db = require('./db');
 var ArtistsController = require('./controllers/artists');
 
@@ -24,7 +22,7 @@ app.put('/artists/:id', ArtistsController.update);
 
 app.delete('/artists/:id', ArtistsController.delete);
 
-// так зроблено щоб не щапускати сервер якщо немає зєднання з БД
+// так зроблено щоб не щапускати сервер якщо виникає помилка зєднання з БД
 db.connect('mongodb://127.0.0.1:27017/myapi', function (err) {
    if (err){
        return console.log(err);
