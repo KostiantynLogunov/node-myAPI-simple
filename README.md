@@ -6,4 +6,4 @@ npm install
 
 node server.js
 
-# Beafore you should have installed mongodb in you system
+# Before start you should have installed mongodb in your system
